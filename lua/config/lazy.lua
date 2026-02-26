@@ -27,12 +27,30 @@ vim.opt.relativenumber = true
 vim.opt.smartindent = true
 
 vim.opt.list = true
-
 vim.opt.listchars = {
   tab = '▸ ',
   trail = '·',
   nbsp = '␣',
 }
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function()
+    local save_cursor = vim.fn.getpos(".")
+    vim.cmd([[%s/\s\+$//e]])
+    vim.fn.setpos(".", save_cursor)
+  end,
+})
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank({
+      higroup = "Visual",
+      timeout = 200,
+    })
+  end,
+})
 
 require("lazy").setup({
   spec = {
