@@ -18,9 +18,9 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 vim.opt.expandtab = true
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
 
 vim.opt.clipboard = "unnamedplus"
 
@@ -53,6 +53,17 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     })
   end,
 })
+
+-- Salvamento Automático Nativo (Simplificado e Robusto)
+vim.api.nvim_create_autocmd({ "InsertLeave", "FocusLost" }, {
+  pattern = "*", -- Garante que o Neovim saiba que deve monitorar todos os arquivos
+  callback = function()
+    if vim.bo.modified and vim.bo.modifiable and vim.fn.expand("%") ~= "" then
+      vim.cmd("silent! wall")
+    end
+  end,
+})
+
 
 require("lazy").setup({
   spec = {
