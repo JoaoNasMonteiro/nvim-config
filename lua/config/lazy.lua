@@ -54,9 +54,16 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
--- Salvamento Automático Nativo (Simplificado e Robusto)
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    if vim.fn.argc() == 0 then
+      vim.cmd("Neotree current")
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd({ "InsertLeave", "FocusLost" }, {
-  pattern = "*", -- Garante que o Neovim saiba que deve monitorar todos os arquivos
+  pattern = "*",
   callback = function()
     if vim.bo.modified and vim.bo.modifiable and vim.fn.expand("%") ~= "" then
       vim.cmd("silent! wall")
