@@ -1,14 +1,14 @@
 local map = vim.keymap.set
 
-map("n", "<C-h>", "<C-w>h", { desc = "Ir para a janela da esquerda" })
-map("n", "<C-j>", "<C-w>j", { desc = "Ir para a janela de baixo" })
-map("n", "<C-k>", "<C-w>k", { desc = "Ir para a janela de cima" })
-map("n", "<C-l>", "<C-w>l", { desc = "Ir para a janela da direita" })
+map("n", "<C-h>", "<C-w>h", { desc = "Move cursor a window Left" })
+map("n", "<C-j>", "<C-w>j", { desc = "Move cursor a window Down" })
+map("n", "<C-k>", "<C-w>k", { desc = "Move cursor a window Up" })
+map("n", "<c-l>", "<c-w>l", { desc = "Move cursor a window RIght" })
 
-map("n", "<C-Up>", ":resize +2<CR>", { desc = "Aumentar altura da janela" })
-map("n", "<C-Down>", ":resize -2<CR>", { desc = "Diminuir altura da janela" })
-map("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Diminuir largura da janela" })
-map("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Aumentar largura da janela" })
+map("n", "<c-up>", ":resize +2<cr>", { desc = "Increase window height" })
+map("n", "<c-down>", ":resize -2<cr>", { desc = "Decrease window height" })
+map("n", "<c-left>", ":vertical resize -2<cr>", { desc = "Increase window Lenght" })
+map("n", "<c-right>", ":vertical resize +2<cr>", { desc = "Decrease window Lenght" })
 
 --error handling stuff
 map('n', '<leader>d', function()
@@ -20,7 +20,7 @@ map('n', '<leader>d', function()
     vim.diagnostic.open_float()
   end
 end, { desc = 'Toggle/Focus Diagnostic Float' })
-map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open Error List' })
+map('n', '<leader>D', vim.diagnostic.setloclist, { desc = 'Open Error List' })
 map('n', ']d', vim.diagnostic.goto_next, { desc = 'Next Error' })
 map('n', '[d', vim.diagnostic.goto_prev, { desc = 'Prev Error' })
 
@@ -28,5 +28,5 @@ map("v", "p", '"_dP', { desc = "Paste without overwriting clipboard" })
 map({"n", "v"}, "x", '"_x', { desc = "Delete character without copying" })
 
 -- Terminal mode stuffies
-map("t", "<C-Q>", "<C-\\><C-n>", { desc = "Sair do modo terminal" })
+map("t", "<C-Q>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 

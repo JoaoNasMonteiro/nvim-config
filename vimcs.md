@@ -10,10 +10,20 @@ LSP (These shortcuts only work when you are in a file supported by an LSP)
     Space + r + n : Rename the variable/function across the entire project.
     Space + c + a : Suggest automatic fixes for an error (Code Action).
 
+Error Handling & Diagnostics (Custom)
+    Space + d : Toggle/Focus Diagnostic Float.
+    Space + D : Open Error List.
+    ]d : Next Error.
+    [d : Prev Error.
+
+Clipboard & Text Editing (Custom)
+    p (In Visual Mode) : Paste without overwriting clipboard.
+    x : Delete character without copying.
+
 Neo-tree
     Space + e : Toggle the sidebar open/closed.
 
-    (When cursor is INSIDE the sidebar):
+(When cursor is INSIDE the sidebar):
     l : Open the folder or file.
     h : Collapse the folder.
     a : Add a new file (if it ends with /, creates a folder).
@@ -29,12 +39,12 @@ DAP
     F12 : Exit the current function and return to caller (Step Out).
 
 Nvim-Surround
-(In Normal Mode)
+    (In Normal Mode)
     ysiw" : Surround current word with double quotes (e.g., text -> "text").
     cs"' : Change surrounding double quotes to single quotes.
     ds' : Delete surrounding single quotes.
 
-(In Visual Mode - For selected blocks)
+    (In Visual Mode - For selected blocks)
     S (uppercase) + character : Surround the highlighted text.
 
 Gitsigns
@@ -43,9 +53,9 @@ Gitsigns
     Space + h + p : Preview Hunk (shows what was changed in a floating window).
     Space + h + r : Reset Hunk (undoes changes ONLY in that specific block).
 
-Window & Terminal Management (cutom)
-    :vsp : Vertical split
-    :sp : Horizontal split
+Window & Terminal Management (custom)
+    :vsp : Vertical split.
+    :sp : Horizontal split.
     Ctrl + h/j/k/l : Jump cursor between split windows.
     Ctrl + Arrow Keys : Resize the current window.
     Space + q : Close the window where the cursor is currently located.
@@ -55,4 +65,3 @@ Window & Terminal Management (cutom)
 Maintenance Commands
     :Lazy : Open plugin manager (Press uppercase S inside to update everything).
     :Mason : Open the panel to manage LSPs and Debuggers.
-    :ASToggle : Temporarily toggle Auto-save on or off.
