@@ -10,7 +10,7 @@ return {
         changedelete = { text = '~' },
         untracked    = { text = '┆' },
       },
-      
+
       on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
 
@@ -20,21 +20,21 @@ return {
           vim.keymap.set(mode, l, r, opts)
         end
 
-        map('n', ']c', function()
-          if vim.wo.diff then return ']c' end
+        map('n', ']g', function()
+          if vim.wo.diff then return ']g' end
           vim.schedule(function() gs.next_hunk() end)
           return '<Ignore>'
-        end, {expr=true, desc="Pular para próxima alteração Git"})
+        end, {expr=true, desc="Jump to next Git change"})
 
-        map('n', '[c', function()
-          if vim.wo.diff then return '[c' end
+        map('n', '[g', function()
+          if vim.wo.diff then return '[g' end
           vim.schedule(function() gs.prev_hunk() end)
           return '<Ignore>'
-        end, {expr=true, desc="Pular para alteração anterior Git"})
+        end, {expr=true, desc="Jump to prev Git change"})
 
-        map('n', '<leader>hp', gs.preview_hunk, { desc = 'Git: Ver detalhes da alteração' })
-        
-        map('n', '<leader>hr', gs.reset_hunk, { desc = 'Git: Desfazer alteração no bloco' })
+        map('n', '<leader>gp', gs.preview_hunk, { desc = 'Git: see change details' })
+
+        map('n', '<leader>gr', gs.reset_hunk, { desc = 'Git: Undo Git change' })
       end
     })
   end,
