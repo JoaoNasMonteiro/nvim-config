@@ -27,7 +27,7 @@ return {
         -- Where to put new notes. Options: "current_dir" or "notes_subdir"
         new_notes_location = "notes_subdir",
         
-        notes_subdir = "Inbox",
+        notes_subdir = "Zettlekasten",
 
         -- Customize how note IDs are generated when you make a new note
         -- This disables the default Zettelkasten ID prefix (e.g. 16535234-my-note) 
