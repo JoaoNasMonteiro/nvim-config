@@ -15,7 +15,7 @@ return {
     require("render-markdown").setup({
       heading = {
         enabled = true,
-        sign = true,
+        sign = false,
         icons = { 'H ', 'h2 ', 'h3 ', 'h4 ', 'h5 ', 'h6 ' },
       },
 
