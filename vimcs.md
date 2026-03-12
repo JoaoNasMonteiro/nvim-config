@@ -1,4 +1,4 @@
-Telescope (Quick Search)
+lescope (Quick Search)
     Space + f + f : Find files by name across the entire project.
     Space + f + g : Live grep (search for text/words inside all files).
     Space + f + b : List open files (Buffers).
