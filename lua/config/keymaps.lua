@@ -30,3 +30,22 @@ map({"n", "v"}, "x", '"_x', { desc = "Delete character without copying" })
 -- Terminal mode stuffies
 map("t", "<C-Q>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
+
+-- To search for tasks
+map('n', '<leader>tp', function()
+    require('telescope.builtin').grep_string({
+        prompt_title = "Todas as Tarefas Pendentes",
+        search = "- \\[ \\]",
+        use_regex = true,
+    })
+end, { desc = "Search for all pending tasks (- [ ])" })
+
+map('n', '<leader>td', function()
+    require('telescope.builtin').grep_string({
+        prompt_title = "Agenda (Tarefas com Data)",
+        search = "- \\[ \\].*📅",
+        use_regex = true,
+    })
+end, { desc = "Search for pending tasks with deadline" })
+
+
