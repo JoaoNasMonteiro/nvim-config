@@ -8,7 +8,7 @@ return {
   config = function()
     local neogit = require("neogit")
     neogit.setup({
-
+      disable_commit_message = false,
     })
 
     vim.keymap.set("n", "<leader>gs", neogit.open, { desc = "Open Neogit (Status)" })
