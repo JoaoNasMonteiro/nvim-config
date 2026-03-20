@@ -13,7 +13,7 @@ return {
     -- O plugin baixa se faltar algum, e ignora (no-op) se já estiverem no disco.
     ts.install({
       "c", "cpp", "lua", "markdown", "markdown_inline",
-      "python", "vim", "vimdoc", "query", "make", "latex", "bash"
+      "python", "vim", "vimdoc", "query", "make", "latex", "ledger", "bash"
     })
 
     -- 2. Ativação Nativa (O Padrão Ouro do Neovim 0.10+)
