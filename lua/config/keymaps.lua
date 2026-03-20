@@ -76,3 +76,6 @@ end
 
 map("n", "<leader>n", toggle_scratchpad, { desc = "Toggle Lateral Scratchpad" })
 
+-- Hex visualization stuff
+map('n', "<leader>xx", ":%!xxd<CR>", {desc = "View File as Hex"})
+map('n', "<leader>xr", ":%!xxd -r<CR>", {desc = "Revert View File As Hex"})
