@@ -79,3 +79,15 @@ map("n", "<leader>n", toggle_scratchpad, { desc = "Toggle Lateral Scratchpad" })
 -- Hex visualization stuff
 map('n', "<leader>xx", ":%!xxd<CR>", {desc = "View File as Hex"})
 map('n', "<leader>xr", ":%!xxd -r<CR>", {desc = "Revert View File As Hex"})
+
+-- Auto Edit nvim config
+
+local function edit_config_on_new_tab()
+
+  vim.cmd("tabnew")
+  vim.cmd("tcd " .. vim.fn.stdpath("config"))
+  require("telescope.builtin").find_files()
+
+end
+
+map('n', "<leader>C", edit_config_on_new_tab, { desc = "Open Config" })
