@@ -16,7 +16,7 @@ return {
 
 	opts = {
 		formatters_by_ft = {
-			lua = { "stylua" },
+			--			lua = { "stylua" },
 			python = { "isort", "black" },
 			c = { "clang-format" },
 			cpp = { "clang-format" },
