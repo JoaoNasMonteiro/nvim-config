@@ -12,6 +12,9 @@ return {
 		require("luasnip.loaders.from_lua").load({
 			paths = { vim.fn.stdpath("config") .. "/snippets" },
 		})
+
+		ls.filetype_extend("markdown", { "latex", "tex" })
+
 		ls.config.set_config({
 			history = true,
 			update_events = "TextChanged,TextChangedI",

@@ -54,7 +54,6 @@ $$f(x)=\int_{-\infty}^{\infty}\hat{f}(\xi)\,e^{2\pi i\xi x}\,d\xi$$
 
 And Maxwell's equations to test stacked Greek letters and partial derivatives:
 
-
 $$\nabla\cdot\mathbf{E}=\frac{\rho}{\varepsilon_0}$$
 
 $$\nabla\times\mathbf{E}=-\frac{\partial\mathbf{B}}{\partial t}$$
