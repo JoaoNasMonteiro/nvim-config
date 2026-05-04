@@ -22,8 +22,8 @@ map("n", "<c-right>", ":vertical resize +2<cr>", { desc = "Decrease window Lengh
 -- end, { desc = 'Toggle/Focus Diagnostic Float' })
 -- map('n', '<leader>D', vim.diagnostic.setloclist, { desc = 'Open Error List' })
 
-map("n", "]d", vim.diagnostic.goto_next, { desc = "Next Error" })
-map("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev Error" })
+map("n", "]e", vim.diagnostic.goto_next, { desc = "Next Error" })
+map("n", "[e", vim.diagnostic.goto_prev, { desc = "Prev Error" })
 
 map("v", "p", '"_dP', { desc = "Paste without overwriting clipboard" })
 map({ "n", "v" }, "x", '"_x', { desc = "Delete character without copying" })
@@ -87,3 +87,68 @@ local function edit_config_on_new_tab()
 end
 
 map("n", "<leader>C", edit_config_on_new_tab, { desc = "Open Config" })
+
+-- Disassembler
+local function disasm_buffer(arch_type)
+	if vim.fn.executable("llvm-objdump") == 0 then
+		vim.notify(
+			"Missing dependency: 'llvm-objdump' was not found in your $PATH.\n"
+				.. "Please install the LLVM package on your system (e.g., sudo apt install llvm / brew install llvm).",
+			vim.log.levels.ERROR
+		)
+		return
+	end
+
+	local target_file = vim.fn.expand("%:p")
+
+	if target_file == "" or vim.fn.filereadable(target_file) == 0 then
+		vim.notify("File not found or invalid for disassembly.", vim.log.levels.ERROR)
+		return
+	end
+
+	local cmd = ""
+
+	if arch_type == "intel" then
+		cmd = string.format("llvm-objdump -d --x86-asm-syntax=intel %s", vim.fn.shellescape(target_file))
+	elseif arch_type == "arm" or arch_type == "auto" then
+		cmd = string.format("llvm-objdump -d %s", vim.fn.shellescape(target_file))
+	else
+		vim.notify("Arch not found or not configured.", vim.log.levels.ERROR)
+		return
+	end
+
+	vim.cmd("vnew")
+	local buf = vim.api.nvim_get_current_buf()
+
+	vim.bo[buf].buftype = "nofile"
+	vim.bo[buf].bufhidden = "wipe"
+	vim.bo[buf].swapfile = false
+	vim.bo[buf].filetype = "asm"
+
+	vim.fn.jobstart(cmd, {
+		stdout_buffered = true,
+		on_stdout = function(_, data)
+			if data then
+				vim.api.nvim_buf_set_lines(buf, 0, -1, false, data)
+			end
+		end,
+		on_exit = function(_, code)
+			if code ~= 0 then
+				vim.notify("Error executing llvm-objdump. Is the file a valid binary?", vim.log.levels.ERROR)
+			else
+				vim.bo[buf].readonly = true
+				vim.bo[buf].modifiable = false
+			end
+		end,
+	})
+end
+
+local opts = { noremap = true, silent = true }
+
+vim.keymap.set("n", "<leader>di", function()
+	disasm_buffer("intel")
+end, vim.tbl_extend("force", opts, { desc = "Disassemble: x86_64 (Intel Syntax)" }))
+
+vim.keymap.set("n", "<leader>da", function()
+	disasm_buffer("arm")
+end, vim.tbl_extend("force", opts, { desc = "Disassemble: ARM (Auto-detect)" }))

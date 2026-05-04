@@ -6,17 +6,17 @@ return {
 
 	keys = {
 		{
-			"<leader>D",
+			"<leader>Ee",
 			"<cmd>Trouble diagnostics toggle<cr>",
 			desc = "Painel de Diagnósticos do Projeto (Trouble)",
 		},
 		{
-			"<leader>dd",
+			"<leader>Ed",
 			"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
 			desc = "Diagnósticos Apenas do Buffer Atual",
 		},
 		{
-			"<leader>dq",
+			"<leader>Eq",
 			"<cmd>Trouble qflist toggle<cr>",
 			desc = "Quickfix List (Trouble)",
 		},

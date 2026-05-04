@@ -6,7 +6,7 @@ return {
 		"HexAssemble",
 	},
 	keys = {
-		{ "<leader>hx", "<cmd>HexToggle<cr>", desc = "Toggle Hex Editor" },
+		{ "<leader>xe", "<cmd>HexToggle<cr>", desc = "Toggle Hex Editor" },
 	},
 	config = function()
 		require("hex").setup({
