@@ -105,13 +105,13 @@ require("lazy").setup({
 		{ import = "plugins" },
 
 		-- Dev plugins
-		{
-			dir = "/home/jjp/bitmath",
-			dev = true,
-			config = function()
-				require("bitmath").setup()
-			end,
-		},
+		-- 	{
+		-- 		dir = "/home/jjp/bitmath",
+		-- 		dev = true,
+		-- 		config = function()
+		-- 			require("bitmath").setup()
+		-- 		end,
+		-- 	},
 	},
 
 	install = { colorscheme = { "srcery", "habamax" } },
