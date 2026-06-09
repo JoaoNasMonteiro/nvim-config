@@ -1,119 +1,25 @@
+-- lazy.nvim bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-	if vim.v.shell_error ~= 0 then
-		vim.api.nvim_echo({
-			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out, "WarningMsg" },
-			{ "\nPress any key to exit..." },
-		}, true, {})
-		vim.fn.getchar()
-		os.exit(1)
-	end
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
 vim.opt.rtp:prepend(lazypath)
 
--- vim.opt.conceallevel = 2
-
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-
--- Custom tabulation rules for languages that prefer 4 spaces
-local indent_group = vim.api.nvim_create_augroup("CustomIndent", { clear = true })
-
-vim.api.nvim_create_autocmd("FileType", {
-	group = indent_group,
-	pattern = { "c", "cpp", "python", "rust" },
-	callback = function()
-		vim.opt_local.shiftwidth = 4
-		vim.opt_local.tabstop = 4
-		vim.opt_local.expandtab = true
-	end,
-})
-
-vim.opt.clipboard = "unnamedplus"
-
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.smartindent = true
-
-vim.opt.list = true
-vim.opt.listchars = {
-	tab = "▸ ",
-	trail = "·",
-	nbsp = "␣",
-}
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*",
-	callback = function()
-		local save_cursor = vim.fn.getpos(".")
-		vim.cmd([[%s/\s\+$//e]])
-		vim.fn.setpos(".", save_cursor)
-	end,
-})
-
-vim.api.nvim_create_autocmd("TextYankPost", {
-	group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank({
-			higroup = "Visual",
-			timeout = 200,
-		})
-	end,
-})
-
-vim.api.nvim_create_autocmd("VimEnter", {
-	callback = function()
-		if vim.fn.argc() == 0 then
-			vim.cmd("Neotree current")
-		end
-	end,
-})
-
-vim.api.nvim_create_autocmd({ "InsertLeave", "FocusLost" }, {
-	pattern = "*",
-	callback = function()
-		if vim.bo.modified and vim.bo.modifiable and vim.fn.expand("%") ~= "" then
-			vim.cmd("silent! wall")
-		end
-	end,
-})
-
-vim.diagnostic.config({
-	virtual_text = {
-		prefix = "●",
-		source = "if_many",
-	},
-	signs = true,
-	underline = true,
-
-	update_in_insert = false,
-
-	severity_sort = true,
-})
-
--- require lazy
+-- lazy.nvim setup
 require("lazy").setup({
-	spec = {
-		{ import = "plugins" },
-
-		-- Dev plugins
-		-- 	{
-		-- 		dir = "/home/jjp/bitmath",
-		-- 		dev = true,
-		-- 		config = function()
-		-- 			require("bitmath").setup()
-		-- 		end,
-		-- 	},
-	},
-
-	install = { colorscheme = { "srcery", "habamax" } },
-	checker = { enabled = true },
+  spec = {
+    { import = "plugins" },
+  },
+  install = { colorscheme = { "srcery", "habamax" } },
+  checker = { enabled = true },
 })
