@@ -3,6 +3,8 @@
 *~
 *.bak
 
+lazy-lock.json
+
 Session.vim
 .netrwhist
 lazy-lock.json
