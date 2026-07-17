@@ -9,6 +9,12 @@ map("n", "<C-j>", "<C-w>j", { desc = "Move cursor a window Down" })
 map("n", "<C-k>", "<C-w>k", { desc = "Move cursor a window Up" })
 map("n", "<c-l>", "<c-w>l", { desc = "Move cursor a window RIght" })
 
+map("n", "<C-w>t", function()
+	vim.cmd("vsplit")
+	vim.cmd("wincmd p")
+	vim.cmd("terminal")
+end, { desc = "opens terminal in vsplit", noremap = true, silent = true })
+
 -- window resizing
 map("n", "<c-up>", ":resize +2<cr>", { desc = "Increase window height" })
 map("n", "<c-down>", ":resize -2<cr>", { desc = "Decrease window height" })
