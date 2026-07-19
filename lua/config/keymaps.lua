@@ -15,6 +15,9 @@ map("n", "<C-w>t", function()
 	vim.cmd("terminal")
 end, { desc = "opens terminal in vsplit", noremap = true, silent = true })
 
+map("n", "<up>", "gk")
+map("n", "<down>", "gj")
+
 -- window resizing
 map("n", "<c-up>", ":resize +2<cr>", { desc = "Increase window height" })
 map("n", "<c-down>", ":resize -2<cr>", { desc = "Decrease window height" })
