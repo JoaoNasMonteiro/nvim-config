@@ -9,7 +9,9 @@ map("n", "<C-j>", "<C-w>j", { desc = "Move cursor a window Down" })
 map("n", "<C-k>", "<C-w>k", { desc = "Move cursor a window Up" })
 map("n", "<c-l>", "<c-w>l", { desc = "Move cursor a window RIght" })
 
-map("n", "<C-w>t", function()
+map("<C-w>t", ":tabnew", { desc = "creates a new tab" })
+
+map("n", "<C-t>", function()
 	vim.cmd("vsplit")
 	vim.cmd("wincmd p")
 	vim.cmd("terminal")
