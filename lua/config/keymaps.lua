@@ -7,11 +7,11 @@ map("n", "<leader>e", "<cmd>Neotree toggle<cr>", { desc = "Toggle file explorer"
 map("n", "<C-h>", "<C-w>h", { desc = "Move cursor a window Left" })
 map("n", "<C-j>", "<C-w>j", { desc = "Move cursor a window Down" })
 map("n", "<C-k>", "<C-w>k", { desc = "Move cursor a window Up" })
-map("n", "<c-l>", "<c-w>l", { desc = "Move cursor a window RIght" })
+map("n", "<C-l>", "<c-w>l", { desc = "Move cursor a window RIght" })
 
-map("<C-w>t", ":tabnew", { desc = "creates a new tab" })
+map("n", "<C-w>t", ":tabnew<CR>", { desc = "creates a new tab" })
 
-map("n", "<C-t>", function()
+map("n", "T", function()
 	vim.cmd("vsplit")
 	vim.cmd("wincmd p")
 	vim.cmd("terminal")
