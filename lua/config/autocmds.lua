@@ -23,6 +23,21 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- Desabilita o wrap por padrão para todos os arquivos
+vim.opt.wrap = false
+
+local wrap_group = vim.api.nvim_create_augroup("WordWrapConfig", { clear = true })
+
+-- Habilita para md e txt
+vim.api.nvim_create_autocmd("FileType", {
+	group = wrap_group,
+	pattern = { "markdown", "text" }, 
+	callback = function()
+		vim.opt_local.wrap = true
+		vim.opt_local.linebreak = true
+	end,
+})
+
 -- remove trailing whitespaces on save
 vim.api.nvim_create_autocmd("BufWritePre", {
 	group = general_group,
