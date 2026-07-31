@@ -4,8 +4,24 @@ local hex_group = vim.api.nvim_create_augroup("BinaryWorkflow", { clear = true }
 vim.g.current_hex_cols = 16
 local MAX_HEX_FILE_SIZE = 2097152 -- 2MB (2 * 1024 * 1024 bytes)
 
--- Função para testar se o arquivo é binário buscando pelo byte NUL
+-- Tabela de extensões que sempre serão tratadas como binários
+local BINARY_EXTENSIONS = {
+	["ch8"] = true,
+	["rom"] = true,
+	["out"] = true,
+	["bin"] = true,
+	["dump"] = true,
+}
+
+-- Função para testar se o arquivo é binário (por extensão ou buscando pelo byte NUL)
 local function is_binary_file(filepath)
+	-- 1. Verifica pela extensão do arquivo primeiro
+	local ext = vim.fn.fnamemodify(filepath, ":e"):lower()
+	if ext ~= "" and BINARY_EXTENSIONS[ext] then
+		return true
+	end
+
+	-- 2. Fallback: testa buscando pelo byte NUL
 	local f = io.open(filepath, "rb")
 	if not f then
 		return false
@@ -48,6 +64,10 @@ _G.ToggleHexView = function()
 	vim.bo.binary = true
 	vim.bo.fileformat = "unix"
 
+	-- PREVINE O NEOVIM DE INSERIR O '0A' (NEWLINE) NO FINAL DO ARQUIVO
+	vim.bo.fixeol = false
+	vim.bo.endofline = false
+
 	if vim.b.is_hex_view or vim.bo.filetype == "xxd" then
 		revert_hex_view()
 		print("Hex View: OFF")
@@ -73,6 +93,10 @@ vim.api.nvim_create_autocmd("BufReadPre", {
 			-- 1. Sempre protege o arquivo setando como binário
 			vim.bo[args.buf].binary = true
 			vim.bo[args.buf].fileformat = "unix"
+
+			-- PREVINE A QUEBRA DE LINHA (0A) AUTOMÁTICA
+			vim.bo[args.buf].fixeol = false
+			vim.bo[args.buf].endofline = false
 
 			-- 2. Checa o tamanho do arquivo
 			local file_size = vim.fn.getfsize(args.match)
