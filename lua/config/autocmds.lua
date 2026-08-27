@@ -31,7 +31,7 @@ local wrap_group = vim.api.nvim_create_augroup("WordWrapConfig", { clear = true 
 -- Habilita para md e txt
 vim.api.nvim_create_autocmd("FileType", {
 	group = wrap_group,
-	pattern = { "markdown", "text" }, 
+	pattern = { "markdown", "text" },
 	callback = function()
 		vim.opt_local.wrap = true
 		vim.opt_local.linebreak = true
@@ -55,7 +55,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 vim.api.nvim_create_autocmd("TextYankPost", {
 	group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
 	callback = function()
-		vim.highlight.on_yank({
+		vim.hl.on_yank({
 			higroup = "Visual",
 			timeout = 200,
 		})
@@ -82,3 +82,50 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "FocusLost" }, {
 		end
 	end,
 })
+
+-- autosave .ipynb fix (Blindado e Unificado)
+-- local jupytext_group = vim.api.nvim_create_augroup("Jupytext", { clear = true })
+--
+-- -- Intercepta a ABERTURA do arquivo .ipynb
+-- vim.api.nvim_create_autocmd("BufReadCmd", {
+-- 	pattern = "*.ipynb",
+-- 	group = jupytext_group,
+-- 	desc = "Lê o JSON do ipynb e converte para texto Python em memória",
+-- 	callback = function(opts)
+-- 		local filepath = vim.fn.expand("<afile>")
+-- 		local cmd = string.format("jupytext --to py:percent --output - '%s'", filepath)
+-- 		local output = vim.fn.systemlist(cmd)
+--
+-- 		if vim.v.shell_error ~= 0 then
+-- 			vim.notify("Erro ao ler ipynb via Jupytext", vim.log.levels.ERROR)
+-- 			return
+-- 		end
+--
+-- 		vim.api.nvim_buf_set_lines(opts.buf, 0, -1, false, output)
+-- 		vim.bo[opts.buf].filetype = "python"
+-- 		vim.bo[opts.buf].modified = false
+-- 	end,
+-- })
+--
+-- -- Intercepta o SALVAMENTO do arquivo .ipynb
+-- vim.api.nvim_create_autocmd("BufWriteCmd", {
+-- 	pattern = "*.ipynb",
+-- 	group = jupytext_group,
+-- 	desc = "Lê o texto Python da tela e atualiza o JSON do ipynb no disco",
+-- 	callback = function(opts)
+-- 		-- Pega o caminho real do arquivo do buffer atual de forma segura
+-- 		local filepath = vim.api.nvim_buf_get_name(opts.buf)
+-- 		local lines = vim.api.nvim_buf_get_lines(opts.buf, 0, -1, false)
+--
+-- 		-- Passa o caminho do arquivo .ipynb explicitamente no output
+-- 		local cmd = string.format("jupytext --from py:percent --to ipynb --output '%s' -", filepath)
+-- 		local result = vim.fn.system(cmd, lines)
+--
+-- 		if vim.v.shell_error == 0 then
+-- 			vim.bo[opts.buf].modified = false
+-- 			vim.notify("Notebook sincronizado com sucesso!", vim.log.levels.INFO, { title = "Automator" })
+-- 		else
+-- 			vim.notify("Erro ao salvar: " .. tostring(result), vim.log.levels.ERROR, { title = "Automator" })
+-- 		end
+-- 	end,
+-- })

@@ -11,5 +11,6 @@ require("config.keymaps")
 
 require("config.autocmds")
 require("config.hex")
+require("config.jupyter")
 
 vim.opt.termguicolors = true
