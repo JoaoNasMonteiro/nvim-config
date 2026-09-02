@@ -5,6 +5,9 @@ vim.g.maplocalleader = " "
 -- disable conceallevel (commented out as in original)
 -- vim.opt.conceallevel = 2
 
+-- python venv
+vim.g.python3_host_prog = vim.fn.expand("~/.local/share/nvim/venv/bin/python")
+
 -- tabs and indentation
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
