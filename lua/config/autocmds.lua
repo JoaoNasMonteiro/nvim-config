@@ -18,7 +18,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "markdown", "text", "gitcommit" },
 	callback = function()
 		vim.opt_local.spell = true
-
 		vim.opt_local.spelllang = "pt_br,en_us"
 	end,
 })
@@ -51,11 +50,11 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
--- highlight yanked text
-vim.api.nvim_create_autocmd("TextYankPost", {
+-- highlight yanked AND pasted text (Unificado)
+vim.api.nvim_create_autocmd({ "TextYankPost", "TextPutPost" }, {
 	group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
 	callback = function()
-		vim.hl.on_yank({
+		vim.hl.hl_op({
 			higroup = "Visual",
 			timeout = 200,
 		})
@@ -88,44 +87,44 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "FocusLost" }, {
 --
 -- -- Intercepta a ABERTURA do arquivo .ipynb
 -- vim.api.nvim_create_autocmd("BufReadCmd", {
--- 	pattern = "*.ipynb",
--- 	group = jupytext_group,
--- 	desc = "Lê o JSON do ipynb e converte para texto Python em memória",
--- 	callback = function(opts)
--- 		local filepath = vim.fn.expand("<afile>")
--- 		local cmd = string.format("jupytext --to py:percent --output - '%s'", filepath)
--- 		local output = vim.fn.systemlist(cmd)
+--     pattern = "*.ipynb",
+--     group = jupytext_group,
+--     desc = "Lê o JSON do ipynb e converte para texto Python em memória",
+--     callback = function(opts)
+--         local filepath = vim.fn.expand("<afile>")
+--         local cmd = string.format("jupytext --to py:percent --output - '%s'", filepath)
+--         local output = vim.fn.systemlist(cmd)
 --
--- 		if vim.v.shell_error ~= 0 then
--- 			vim.notify("Erro ao ler ipynb via Jupytext", vim.log.levels.ERROR)
--- 			return
--- 		end
+--         if vim.v.shell_error ~= 0 then
+--             vim.notify("Erro ao ler ipynb via Jupytext", vim.log.levels.ERROR)
+--             return
+--         end
 --
--- 		vim.api.nvim_buf_set_lines(opts.buf, 0, -1, false, output)
--- 		vim.bo[opts.buf].filetype = "python"
--- 		vim.bo[opts.buf].modified = false
--- 	end,
+--         vim.api.nvim_buf_set_lines(opts.buf, 0, -1, false, output)
+--         vim.bo[opts.buf].filetype = "python"
+--         vim.bo[opts.buf].modified = false
+--     end,
 -- })
 --
 -- -- Intercepta o SALVAMENTO do arquivo .ipynb
 -- vim.api.nvim_create_autocmd("BufWriteCmd", {
--- 	pattern = "*.ipynb",
--- 	group = jupytext_group,
--- 	desc = "Lê o texto Python da tela e atualiza o JSON do ipynb no disco",
--- 	callback = function(opts)
--- 		-- Pega o caminho real do arquivo do buffer atual de forma segura
--- 		local filepath = vim.api.nvim_buf_get_name(opts.buf)
--- 		local lines = vim.api.nvim_buf_get_lines(opts.buf, 0, -1, false)
+--     pattern = "*.ipynb",
+--     group = jupytext_group,
+--     desc = "Lê o texto Python da tela e atualiza o JSON do ipynb no disco",
+--     callback = function(opts)
+--         -- Pega o caminho real do arquivo do buffer atual de forma segura
+--         local filepath = vim.api.nvim_buf_get_name(opts.buf)
+--         local lines = vim.api.nvim_buf_get_lines(opts.buf, 0, -1, false)
 --
--- 		-- Passa o caminho do arquivo .ipynb explicitamente no output
--- 		local cmd = string.format("jupytext --from py:percent --to ipynb --output '%s' -", filepath)
--- 		local result = vim.fn.system(cmd, lines)
+--         -- Passa o caminho do arquivo .ipynb explicitamente no output
+--         local cmd = string.format("jupytext --from py:percent --to ipynb --output '%s' -", filepath)
+--         local result = vim.fn.system(cmd, lines)
 --
--- 		if vim.v.shell_error == 0 then
--- 			vim.bo[opts.buf].modified = false
--- 			vim.notify("Notebook sincronizado com sucesso!", vim.log.levels.INFO, { title = "Automator" })
--- 		else
--- 			vim.notify("Erro ao salvar: " .. tostring(result), vim.log.levels.ERROR, { title = "Automator" })
--- 		end
--- 	end,
+--         if vim.v.shell_error == 0 then
+--             vim.bo[opts.buf].modified = false
+--             vim.notify("Notebook sincronizado com sucesso!", vim.log.levels.INFO, { title = "Automator" })
+--         else
+--             vim.notify("Erro ao salvar: " .. tostring(result), vim.log.levels.ERROR, { title = "Automator" })
+--         end
+--     end,
 -- })
