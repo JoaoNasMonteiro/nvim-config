@@ -6,7 +6,13 @@ return {
 		vim.g.vimtex_version_check = 0
 		vim.g.vimtex_view_method = "zathura"
 
+		-- O método de compilação deve ser o gerenciador de build (latexmk)
 		vim.g.vimtex_compiler_method = "latexmk"
+
+		-- Define o motor padrão do latexmk como -lualatex
+		vim.g.vimtex_compiler_latexmk_engines = {
+			_ = "-lualatex",
+		}
 
 		vim.g.vimtex_quickfix_ignore_filters = {
 			"Underfull \\hbox",
