@@ -61,16 +61,6 @@ vim.api.nvim_create_autocmd({ "TextYankPost", "TextPutPost" }, {
 	end,
 })
 
--- open neotree on startup if no arguments are passed
-vim.api.nvim_create_autocmd("VimEnter", {
-	group = general_group,
-	callback = function()
-		if vim.fn.argc() == 0 then
-			vim.cmd("Neotree current")
-		end
-	end,
-})
-
 -- autosave on insert leave or focus lost
 vim.api.nvim_create_autocmd({ "InsertLeave", "FocusLost" }, {
 	group = general_group,
