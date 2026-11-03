@@ -1,6 +1,16 @@
 -- Create a general augroup to prevent duplicate autocmds on reload
 local general_group = vim.api.nvim_create_augroup("GeneralAutocmds", { clear = true })
 
+-- Opens neotree automatically on startup
+vim.api.nvim_create_autocmd("VimEnter", {
+	group = general_group,
+	callback = function()
+		if vim.fn.argc() == 0 then
+			vim.cmd("Neotree focus")
+		end
+	end,
+})
+
 -- custom indentation for specific languages
 local indent_group = vim.api.nvim_create_augroup("CustomIndent", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
