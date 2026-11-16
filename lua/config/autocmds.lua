@@ -6,7 +6,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 	group = general_group,
 	callback = function()
 		if vim.fn.argc() == 0 then
-			vim.cmd("Neotree focus")
+			vim.cmd("Neotree filesystem position=current dir=" .. vim.fn.getcwd())
 		end
 	end,
 })
