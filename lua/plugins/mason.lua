@@ -1,36 +1,25 @@
 return {
-  {
-    "williamboman/mason.nvim",
-    cmd = "Mason",
-    keys = {
-      { "<leader>cm", "<cmd>Mason<cr>", desc = "Abrir interface do Mason" }
-    },
-    build = ":MasonUpdate",
-    opts = {
-      ui = {
-        icons = {
-          package_installed = "✓",
-          package_pending = "➜",
-          package_uninstalled = "✗",
-        },
-      },
-    },
-  },
+{
+	"williamboman/mason.nvim",
+	lazy = false,
+	build = ":MasonUpdate",
 
-  {
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
-    dependencies = { "williamboman/mason.nvim" },
-    opts = {
-      ensure_installed = {
-        "stylua",
-        "black",
-        "isort",
-        "clang-format",
-        "pyright",
-        "clangd",
-      },
-      run_on_start = true,
-      auto_update = false,
-    },
-  },
+	keys = {
+		{
+			"<leader>cm",
+			"<cmd>Mason<cr>",
+			desc = "Abrir interface do Mason",
+		},
+	},
+
+	opts = {
+		ui = {
+			icons = {
+				package_installed = "✓",
+				package_pending = "➜",
+				package_uninstalled = "✗",
+			},
+		},
+	},
+}
 }
